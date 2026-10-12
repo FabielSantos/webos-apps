@@ -3,9 +3,30 @@
   "page": 1,
   "count": 1,
   "maxPage": 1,
-  "itemsTotal": 4
+  "itemsTotal": 5
  },
  "packages": [
+  {
+   "id": "com.fvsant.canais",
+   "title": "Canais",
+   "iconUri": "https://fabielsantos.github.io/webos-apps/apps/canais/largeIcon.png",
+   "manifest": {
+    "id": "com.fvsant.canais",
+    "version": "1.0.0",
+    "type": "web",
+    "title": "Canais",
+    "appDescription": "Canais ao vivo gratuitos (listas M3U/HLS do iptv-org): Brasil, Portugal, Canadá e mais.",
+    "iconUri": "https://fabielsantos.github.io/webos-apps/apps/canais/largeIcon.png",
+    "sourceUrl": "https://github.com/FabielSantos/webos-apps/tree/main/apps/canais",
+    "rootRequired": false,
+    "ipkUrl": "https://fabielsantos.github.io/webos-apps/ipks/com.fvsant.canais_1.0.0_all.ipk",
+    "ipkHash": {
+     "sha256": "9645b60a123451a4feafcc204d1b8710087f1aff10f908c2f75397c5eaa5480e"
+    }
+   },
+   "shortDescription": "Canais ao vivo gratuitos (listas M3U/HLS do iptv-org): Brasil, Portugal, Canadá e mais.",
+   "fullDescriptionUrl": "https://fabielsantos.github.io/webos-apps/apps/canais/description.html"
+  },
   {
    "id": "com.fvsant.clima",
    "title": "Clima",

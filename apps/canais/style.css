@@ -1,0 +1,58 @@
+/* 1920x1080 TV, 1rem = 20px. Chromium 68 (webOS 5): no flex gap. */
+html { font-size: calc(100vw / 96); }
+* { box-sizing: border-box; }
+body { margin: 0; height: 100vh; overflow: hidden; background: #000; color: #e2e8f0; font-family: "LG Smart UI", "Helvetica Neue", Arial, sans-serif; }
+
+.browse { height: 100vh; display: flex; flex-direction: column; padding: 2.5rem 3.5rem 1.5rem;
+  background: radial-gradient(ellipse at 15% 0%, #3b0764 0%, #120a24 45%, #05040b 100%); }
+.browse.hidden { display: none; }
+header { display: flex; justify-content: space-between; align-items: baseline; height: 4.5rem; }
+.brand { font-size: 2.6rem; font-weight: 700; }
+.clock { font-size: 1.6rem; color: #c4b5fd; }
+
+main { flex: 1; display: flex; min-height: 0; margin-top: 1rem; }
+.sources { width: 22rem; margin-right: 2.5rem; padding: 0.4rem; }
+.src { display: flex; align-items: center; justify-content: space-between; height: 4rem; padding: 0 1.2rem; margin-bottom: 0.6rem;
+  border-radius: 0.8rem; background: rgba(196, 181, 253, 0.07); border: 0.15rem solid transparent; font-size: 1.45rem; }
+.src .count { font-size: 1.05rem; color: #a78bfa; }
+.src.active { background: rgba(167, 139, 250, 0.18); }
+.src.focused { border-color: #a78bfa; background: rgba(167, 139, 250, 0.32); }
+
+.channels-box { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.list-title { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.12rem; color: #a78bfa; height: 2.4rem; }
+.channels { flex: 1; overflow: hidden; padding: 0.4rem; }
+.ch { display: flex; align-items: center; height: 4.4rem; padding: 0 1rem; margin-bottom: 0.5rem; border-radius: 0.8rem;
+  background: rgba(196, 181, 253, 0.06); border: 0.15rem solid transparent; }
+.ch .logo { flex: none; width: 5.4rem; height: 3.4rem; margin-right: 1.2rem; display: flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, 0.92); border-radius: 0.5rem; overflow: hidden; }
+.ch .logo img { max-width: 92%; max-height: 88%; }
+.ch .logo .ph { color: #4c1d95; font-weight: 700; font-size: 1.4rem; }
+.ch .name { flex: 1; font-size: 1.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ch .group { flex: none; max-width: 16rem; margin-left: 1rem; font-size: 1.05rem; color: #a78bfa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ch .fav { flex: none; width: 2rem; margin-left: 0.6rem; color: #facc15; font-size: 1.4rem; text-align: center; }
+.ch.focused { border-color: #a78bfa; background: rgba(167, 139, 250, 0.3); }
+.channels.dim .ch.focused { border-color: rgba(167, 139, 250, 0.4); background: rgba(167, 139, 250, 0.12); }
+.msg { font-size: 1.5rem; color: #a78bfa; padding: 2rem 0.5rem; line-height: 2.3rem; }
+
+.hints { height: 2.6rem; display: flex; align-items: center; font-size: 1.1rem; color: #c4b5fd; }
+.hints span { margin-right: 2.2rem; }
+.key { display: inline-block; padding: 0.1rem 0.6rem; border-radius: 0.4rem; background: #2e1065; color: #f5f3ff; margin-right: 0.4rem; font-weight: 600; }
+.key.yellow { background: #ca8a04; color: #fff; }
+
+.player { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #000; }
+.player.hidden { display: none; }
+.player video { width: 100%; height: 100%; }
+.osd { position: fixed; left: 0; right: 0; bottom: 0; padding: 2.5rem 3.5rem 2rem; display: flex; align-items: center;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0)); opacity: 0; transition: opacity 0.4s; }
+.osd.show { opacity: 1; }
+.osd .logo { width: 9rem; height: 5.6rem; margin-right: 1.6rem; background: rgba(255, 255, 255, 0.92); border-radius: 0.6rem;
+  display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.osd .logo img { max-width: 92%; max-height: 88%; }
+.osd .num { font-size: 1.4rem; color: #a78bfa; }
+.osd .name { font-size: 2.4rem; font-weight: 600; }
+.osd .meta { font-size: 1.2rem; color: #cbd5e1; margin-top: 0.3rem; }
+.osd .help { margin-left: auto; font-size: 1.15rem; color: #cbd5e1; text-align: right; line-height: 2rem; }
+.pstatus { position: fixed; left: 50%; top: 45%; transform: translate(-50%, -50%); font-size: 1.8rem; text-align: center; line-height: 2.8rem;
+  padding: 1.2rem 2.4rem; border-radius: 1rem; background: rgba(0, 0, 0, 0.6); }
+.pstatus:empty { display: none; }
+.pstatus.err { color: #fca5a5; }

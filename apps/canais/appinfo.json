@@ -1,0 +1,13 @@
+{
+  "id": "com.fvsant.canais",
+  "version": "1.0.0",
+  "vendor": "Fabiel Santos",
+  "type": "web",
+  "main": "index.html",
+  "title": "Canais",
+  "appDescription": "Canais ao vivo gratuitos (listas M3U/HLS do iptv-org): Brasil, Portugal, Canadá e mais.",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "resolution": "1920x1080",
+  "disableBackHistoryAPI": true
+}

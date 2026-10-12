@@ -18,6 +18,14 @@ https://fabielsantos.github.io/webos-apps/api/apps.json
 | Clima | `com.fvsant.clima` | [apps/clima](apps/clima) — weather via Open-Meteo, remote-navigable |
 | Painel | `com.fvsant.painel` | [apps/painel](apps/painel) — living-room dashboard: clock, weather, Google Calendar, Bing photos |
 | Enviar pra TV | `com.fvsant.enviar` | [apps/enviar](apps/enviar) — receive links, media and notes from the phone ([send/](send)) or the Mac ([tools/send-to-tv](tools/send-to-tv)) via ntfy.sh |
+| Canais | `com.fvsant.canais` | [apps/canais](apps/canais) — free live channels from [iptv-org](https://github.com/iptv-org/iptv) M3U lists, native HLS |
+
+### Canais: add your own M3U playlist
+
+```bash
+ares-launch -d tvsala com.fvsant.canais -p '{"m3u":"https://example.com/list.m3u","name":"Minha lista"}'
+ares-launch -d tvsala com.fvsant.canais -p '{"m3u":null,"name":"Minha lista"}'   # remove it
+```
 
 ### Enviar pra TV: setup
 
