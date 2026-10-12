@@ -12,16 +12,16 @@
    "iconUri": "https://fabielsantos.github.io/webos-apps/apps/canais/largeIcon.png",
    "manifest": {
     "id": "com.fvsant.canais",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "type": "web",
     "title": "Canais",
     "appDescription": "Canais ao vivo gratuitos (listas M3U/HLS do iptv-org): Brasil, Portugal, Canadá e mais.",
     "iconUri": "https://fabielsantos.github.io/webos-apps/apps/canais/largeIcon.png",
     "sourceUrl": "https://github.com/FabielSantos/webos-apps/tree/main/apps/canais",
     "rootRequired": false,
-    "ipkUrl": "https://fabielsantos.github.io/webos-apps/ipks/com.fvsant.canais_1.0.0_all.ipk",
+    "ipkUrl": "https://fabielsantos.github.io/webos-apps/ipks/com.fvsant.canais_1.1.0_all.ipk",
     "ipkHash": {
-     "sha256": "9645b60a123451a4feafcc204d1b8710087f1aff10f908c2f75397c5eaa5480e"
+     "sha256": "2ac78eeb6fc7a8eac800fedcaba757f3c6ec3a0084cc5562cdef97bce60afc57"
     }
    },
    "shortDescription": "Canais ao vivo gratuitos (listas M3U/HLS do iptv-org): Brasil, Portugal, Canadá e mais.",
