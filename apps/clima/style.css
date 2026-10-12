@@ -5,6 +5,7 @@ html { font-size: calc(100vw / 96); }
 
 body {
   margin: 0;
+  text-shadow: 0 0.08rem 0.3rem rgba(0, 0, 0, 0.45);
   height: 100vh;
   overflow: hidden;
   background: linear-gradient(160deg, #0f2647 0%, #0b1324 60%, #070b15 100%);
@@ -15,9 +16,55 @@ body {
   padding: 2.5rem 3.5rem 1.5rem; /* TV safe area */
 }
 
+header, main, footer { position: relative; z-index: 1; }
+
+/* ---------- animated weather scene (two layers crossfade) ---------- */
+.scene { position: fixed; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; opacity: 0; transition: opacity 2.5s ease; z-index: 0; }
+.scene.show { opacity: 1; }
+.scene-shade { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 0;
+  background:
+    linear-gradient(180deg, rgba(2, 6, 23, 0.5) 0%, rgba(2, 6, 23, 0) 16%, rgba(2, 6, 23, 0) 84%, rgba(2, 6, 23, 0.6) 100%),
+    linear-gradient(90deg, rgba(2, 6, 23, 0.55) 0%, rgba(2, 6, 23, 0.25) 35%, rgba(2, 6, 23, 0.35) 100%); }
+
+.sky-clear-day   { background: linear-gradient(180deg, #1d6fd8 0%, #4f9ef0 55%, #9cc9f5 100%); }
+.sky-partly-day  { background: linear-gradient(180deg, #2b6cb0 0%, #5f9ad8 55%, #a9c6e6 100%); }
+.sky-cloud-day   { background: linear-gradient(180deg, #4b5563 0%, #6b7280 55%, #9ca3af 100%); }
+.sky-fog-day     { background: linear-gradient(180deg, #6b7280 0%, #9ca3af 60%, #cbd5e1 100%); }
+.sky-rain-day    { background: linear-gradient(180deg, #273444 0%, #3f4f63 55%, #64748b 100%); }
+.sky-snow-day    { background: linear-gradient(180deg, #64748b 0%, #94a3b8 55%, #cbd5e1 100%); }
+.sky-storm-day   { background: linear-gradient(180deg, #1c1830 0%, #2f2a4a 55%, #4b4468 100%); }
+.sky-clear-night { background: linear-gradient(180deg, #020617 0%, #0b1a3a 60%, #1a2c55 100%); }
+.sky-partly-night{ background: linear-gradient(180deg, #030712 0%, #0f1d3d 60%, #1f2f52 100%); }
+.sky-cloud-night { background: linear-gradient(180deg, #0b0f19 0%, #161d2b 60%, #252e3f 100%); }
+.sky-fog-night   { background: linear-gradient(180deg, #111827 0%, #1f2937 60%, #374151 100%); }
+.sky-rain-night  { background: linear-gradient(180deg, #050a14 0%, #0f1a2b 60%, #1e293b 100%); }
+.sky-snow-night  { background: linear-gradient(180deg, #0f172a 0%, #1e293b 60%, #334155 100%); }
+.sky-storm-night { background: linear-gradient(180deg, #07050f 0%, #15112a 60%, #251f40 100%); }
+
+.scene i { position: absolute; display: block; will-change: transform, opacity; }
+.star { width: 0.18rem; height: 0.18rem; border-radius: 50%; background: #fff; animation: twinkle 4s ease-in-out infinite; }
+@keyframes twinkle { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+.sun-glow { right: 6%; top: -12rem; width: 34rem; height: 34rem; border-radius: 50%;
+  background: radial-gradient(circle, rgba(253, 230, 138, 0.95) 0%, rgba(251, 191, 36, 0.45) 25%, rgba(251, 191, 36, 0) 65%); }
+.cloud { left: -60rem; height: 12rem; border-radius: 50%; animation: drift linear infinite;
+  background: radial-gradient(ellipse at center, rgba(241, 245, 249, 0.55) 0%, rgba(241, 245, 249, 0.25) 45%, rgba(241, 245, 249, 0) 70%); }
+.sky-rain-day .cloud, .sky-storm-day .cloud, .scene[class*="-night"] .cloud {
+  background: radial-gradient(ellipse at center, rgba(148, 163, 184, 0.4) 0%, rgba(148, 163, 184, 0.15) 45%, rgba(148, 163, 184, 0) 70%); }
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(160rem); } }
+.drop { top: -12%; width: 0.16rem; height: 5.5rem; background: linear-gradient(180deg, rgba(186, 230, 253, 0), rgba(186, 230, 253, 0.65));
+  animation: fall linear infinite; }
+@keyframes fall { from { transform: translate3d(0, 0, 0) rotate(12deg); } to { transform: translate3d(-12rem, 120vh, 0) rotate(12deg); } }
+.flake { top: -5%; border-radius: 50%; background: rgba(255, 255, 255, 0.9); animation: snow linear infinite; }
+@keyframes snow { 0% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(2.5rem, 55vh, 0); } 100% { transform: translate3d(-1.5rem, 110vh, 0); } }
+.mist { left: -40%; width: 180%; height: 14rem; border-radius: 50%; animation: mist ease-in-out infinite alternate;
+  background: radial-gradient(ellipse at center, rgba(226, 232, 240, 0.35) 0%, rgba(226, 232, 240, 0) 70%); }
+@keyframes mist { from { transform: translateX(-8rem); } to { transform: translateX(8rem); } }
+.flash { top: 0; left: 0; right: 0; bottom: 0; background: #e0e7ff; opacity: 0; animation: flash 9s infinite; }
+@keyframes flash { 0%, 90%, 94%, 100% { opacity: 0; } 91% { opacity: 0.45; } 92% { opacity: 0.05; } 93% { opacity: 0.3; } }
+
 header { display: flex; justify-content: space-between; align-items: baseline; height: 4.5rem; }
 .brand { font-size: 2.6rem; font-weight: 700; letter-spacing: 0.05rem; }
-.clock { font-size: 1.6rem; color: #94a3b8; }
+.clock { font-size: 1.6rem; color: #e2e8f0; }
 
 main { flex: 1; display: flex; min-height: 0; margin-top: 1rem; }
 
@@ -26,7 +73,7 @@ main { flex: 1; display: flex; min-height: 0; margin-top: 1rem; }
 .item {
   display: flex; align-items: center;
   height: 4.2rem; padding: 0 1.2rem; margin-bottom: 0.6rem;
-  border-radius: 0.8rem; background: rgba(148, 163, 184, 0.08);
+  border-radius: 0.8rem; background: rgba(2, 6, 23, 0.38);
   border: 0.15rem solid transparent;
   font-size: 1.45rem; white-space: nowrap; overflow: hidden;
 }
@@ -41,12 +88,17 @@ main { flex: 1; display: flex; min-height: 0; margin-top: 1rem; }
 .panel { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .place { font-size: 2.2rem; font-weight: 600; }
 .place .sub { font-size: 1.3rem; color: #94a3b8; font-weight: 400; margin-left: 0.8rem; }
+.place .city-time { float: right; font-size: 1.6rem; font-weight: 400; color: #e2e8f0; margin-top: 0.4rem; }
 
 .now { display: flex; align-items: center; margin-top: 1rem; }
-.now .big-icon { width: 9.5rem; height: 9.5rem; margin-right: 1.5rem; }
-.now .temp { font-size: 7rem; font-weight: 300; line-height: 1; }
+.now .big-icon { width: 8.5rem; height: 8.5rem; margin-right: 1.2rem; flex: none; }
+.now .temp { font-size: 6.5rem; font-weight: 300; line-height: 1; }
 .now .cond { font-size: 1.7rem; margin-top: 0.4rem; }
-.now .facts { margin-left: auto; font-size: 1.3rem; color: #cbd5e1; line-height: 2.1rem; text-align: right; }
+.now .arc { flex: 1; min-width: 0; margin: 0 1.8rem; }
+.now .arc svg { display: block; width: 100%; height: 7.6rem; }
+.arc-caption { text-align: center; font-size: 1.15rem; color: #cbd5e1; margin-top: 0.2rem; }
+.arc-caption b { color: #f8fafc; }
+.now .facts { flex: none; margin-left: auto; font-size: 1.3rem; color: #cbd5e1; line-height: 2.1rem; text-align: right; }
 .now .facts b { color: #f8fafc; font-weight: 600; }
 
 .section-title { font-size: 1.2rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1rem; margin: 1.6rem 0 0.7rem; }
@@ -54,7 +106,7 @@ main { flex: 1; display: flex; min-height: 0; margin-top: 1rem; }
 .hours { display: flex; }
 .hour {
   flex: 1; text-align: center; padding: 0.7rem 0; margin-right: 0.6rem;
-  border-radius: 0.8rem; background: rgba(148, 163, 184, 0.08);
+  border-radius: 0.8rem; background: rgba(2, 6, 23, 0.38);
 }
 .hour:last-child { margin-right: 0; }
 .hour .t { font-size: 1.1rem; color: #94a3b8; }
@@ -65,7 +117,7 @@ main { flex: 1; display: flex; min-height: 0; margin-top: 1rem; }
 .days { display: flex; }
 .day {
   flex: 1; text-align: center; padding: 0.8rem 0; margin-right: 0.6rem;
-  border-radius: 0.8rem; background: rgba(148, 163, 184, 0.08);
+  border-radius: 0.8rem; background: rgba(2, 6, 23, 0.38);
   border: 0.15rem solid transparent;
 }
 .day:last-child { margin-right: 0; }
@@ -82,7 +134,7 @@ main { flex: 1; display: flex; min-height: 0; margin-top: 1rem; }
 .message b { color: #e2e8f0; }
 
 /* ---------- footer hints ---------- */
-.hints { height: 2.6rem; display: flex; align-items: center; font-size: 1.1rem; color: #94a3b8; }
+.hints { height: 2.6rem; display: flex; align-items: center; font-size: 1.1rem; color: #e2e8f0; }
 .hints span { margin-right: 2.2rem; }
 .key { display: inline-block; padding: 0.1rem 0.6rem; border-radius: 0.4rem; background: #1e293b; color: #e2e8f0; margin-right: 0.4rem; font-weight: 600; }
 .key.red { background: #dc2626; color: #fff; }

@@ -152,6 +152,132 @@
     return null;
   }
 
+  // ---------- time zones ----------
+  function pad(n) { return ('0' + n).slice(-2); }
+  function gmt(offsetSec) {
+    if (!offsetSec) return 'GMT';
+    var mins = Math.abs(offsetSec) / 60;
+    return 'GMT' + (offsetSec < 0 ? '−' : '+') + Math.floor(mins / 60) + (mins % 60 ? ':' + pad(mins % 60) : '');
+  }
+  // "Wall clock" of a place as a Date whose UTC fields hold the local time there
+  function cityNow(d) { return new Date(Date.now() + d.utc_offset_seconds * 1000); }
+  function cityClock(d) { var t = cityNow(d); return pad(t.getUTCHours()) + ':' + pad(t.getUTCMinutes()); }
+  function hourOf(iso) { return +iso.slice(11, 13) + (+iso.slice(14, 16)) / 60; }
+  function duration(h) { var m = Math.round(h * 60); return Math.floor(m / 60) + 'h' + pad(m % 60); }
+
+  // ---------- moon phase (synodic month from a known new moon) ----------
+  var MOON_NAMES = ['Lua nova', 'Lua crescente', 'Quarto crescente', 'Crescente gibosa', 'Lua cheia', 'Minguante gibosa', 'Quarto minguante', 'Lua minguante'];
+  function moonPhase(date) {
+    var days = (date.getTime() - Date.UTC(2000, 0, 6, 18, 14)) / 86400000;
+    var phase = ((days / 29.530588853) % 1 + 1) % 1;           // 0 new, 0.5 full
+    return { phase: phase, lit: (1 - Math.cos(2 * Math.PI * phase)) / 2, name: MOON_NAMES[Math.round(phase * 8) % 8] };
+  }
+  function moonSVG(cx, cy, r, m) {
+    // lit disc, then a shadow disc slid sideways: waxing lights the right side, waning the left
+    var dx = 2 * r * m.lit * (m.phase < 0.5 ? -1 : 1);
+    return '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="#f1f5f9"/>' +
+      '<clipPath id="mc"><circle cx="' + cx + '" cy="' + cy + '" r="' + r + '"/></clipPath>' +
+      '<circle clip-path="url(#mc)" cx="' + (cx + dx) + '" cy="' + cy + '" r="' + r + '" fill="#334155" opacity="0.92"/>' +
+      '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="#e2e8f0" stroke-width="1.5"/>';
+  }
+
+  // ---------- day arc: sun above the horizon by day, below it at night ----------
+  var ARC = { W: 480, H: 150, Y0: 92, UP: 64, DOWN: 34 };
+  function arcY(t, rise, set) {
+    if (t >= rise && t <= set) return ARC.Y0 - ARC.UP * Math.sin(Math.PI * (t - rise) / (set - rise));
+    var night = 24 - (set - rise), since = t > set ? t - set : t + 24 - set;
+    return ARC.Y0 + ARC.DOWN * Math.sin(Math.PI * since / night);
+  }
+  function arcX(t) { return 12 + (ARC.W - 24) * t / 24; }
+
+  function dayArcSVG(d, di) {
+    var rise = hourOf(d.daily.sunrise[di]), set = hourOf(d.daily.sunset[di]);
+    if (!(set > rise)) return '';
+    var dayPts = [], nightA = [], nightB = [];
+    for (var q = 0; q <= 96; q++) {
+      var t = q / 4, pt = arcX(t).toFixed(1) + ',' + arcY(t, rise, set).toFixed(1);
+      if (t < rise) nightA.push(pt); else if (t > set) nightB.push(pt); else dayPts.push(pt);
+    }
+    dayPts.unshift(arcX(rise).toFixed(1) + ',' + ARC.Y0);
+    dayPts.push(arcX(set).toFixed(1) + ',' + ARC.Y0);
+    nightA.push(arcX(rise).toFixed(1) + ',' + ARC.Y0);
+    nightB.unshift(arcX(set).toFixed(1) + ',' + ARC.Y0);
+
+    var s = '<svg viewBox="0 0 ' + ARC.W + ' ' + ARC.H + '" xmlns="http://www.w3.org/2000/svg">' +
+      '<defs><linearGradient id="dg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbbf24" stop-opacity="0.45"/><stop offset="1" stop-color="#fbbf24" stop-opacity="0.05"/></linearGradient></defs>' +
+      '<polygon points="' + dayPts.join(' ') + '" fill="url(#dg)"/>' +
+      '<polyline points="' + dayPts.join(' ') + '" fill="none" stroke="#fbbf24" stroke-width="3"/>' +
+      '<polyline points="' + nightA.join(' ') + '" fill="none" stroke="#64748b" stroke-width="2.5" stroke-dasharray="5 5"/>' +
+      '<polyline points="' + nightB.join(' ') + '" fill="none" stroke="#64748b" stroke-width="2.5" stroke-dasharray="5 5"/>' +
+      '<line x1="12" y1="' + ARC.Y0 + '" x2="' + (ARC.W - 12) + '" y2="' + ARC.Y0 + '" stroke="#94a3b8" stroke-width="1.5"/>';
+    [0, 6, 12, 18, 24].forEach(function (h) {
+      s += '<text x="' + arcX(h) + '" y="146" fill="#94a3b8" font-size="15" text-anchor="' + (h === 0 ? 'start' : h === 24 ? 'end' : 'middle') + '">' + h + 'h</text>';
+    });
+    s += '<text x="' + arcX(rise) + '" y="' + (ARC.Y0 + 20) + '" fill="#fcd34d" font-size="16" text-anchor="middle">↑ ' + hhmm(d.daily.sunrise[di]) + '</text>' +
+      '<text x="' + arcX(set) + '" y="' + (ARC.Y0 + 20) + '" fill="#fdba74" font-size="16" text-anchor="middle">↓ ' + hhmm(d.daily.sunset[di]) + '</text>';
+
+    if (di === 0) {
+      var t = cityNow(d), nowH = t.getUTCHours() + t.getUTCMinutes() / 60;
+      var x = arcX(nowH), y = arcY(nowH, rise, set), isDay = nowH >= rise && nowH <= set;
+      s += '<line x1="' + x + '" y1="8" x2="' + x + '" y2="132" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.6"/>';
+      s += isDay ? '<circle cx="' + x + '" cy="' + y + '" r="16" fill="#fbbf24" opacity="0.25"/><circle cx="' + x + '" cy="' + y + '" r="10" fill="#fde047"/>'
+                 : moonSVG(x, y, 11, moonPhase(new Date()));
+    }
+    return s + '</svg>';
+  }
+
+  function dayArcCaption(d, di) {
+    var rise = hourOf(d.daily.sunrise[di]), set = hourOf(d.daily.sunset[di]);
+    if (di > 0) return 'Duração do dia: <b>' + duration(set - rise) + '</b>';
+    var t = cityNow(d), nowH = t.getUTCHours() + t.getUTCMinutes() / 60;
+    if (nowH < rise) return 'Sol nasce em <b>' + duration(rise - nowH) + '</b> · ' + moonPhase(new Date()).name;
+    if (nowH <= set) return 'Sol se põe em <b>' + duration(set - nowH) + '</b> · dia de ' + duration(set - rise);
+    var nextRise = d.daily.sunrise[1] ? hourOf(d.daily.sunrise[1]) + 24 : rise + 24;
+    return 'Sol nasce em <b>' + duration(nextRise - nowH) + '</b> · ' + moonPhase(new Date()).name;
+  }
+
+  // ---------- animated background scene that follows the shown city's weather ----------
+  var sceneKey = null;
+  function rand(a, b) { return a + Math.random() * (b - a); }
+  function setScene(kind, isDay) {
+    var key = kind + (isDay === 0 ? '-night' : '-day');
+    if (key === sceneKey) return;
+    sceneKey = key;
+    var layers = document.querySelectorAll('.scene');
+    var next = layers[0].className.indexOf('show') >= 0 ? layers[1] : layers[0];
+    var prev = next === layers[0] ? layers[1] : layers[0];
+    var html = '', i;
+    if (isDay === 0 && (kind === 'clear' || kind === 'partly')) {
+      for (i = 0; i < 60; i++) {
+        html += '<i class="star" style="left:' + rand(0, 100).toFixed(1) + '%;top:' + rand(0, 70).toFixed(1) + '%;animation-delay:' + rand(0, 4).toFixed(1) + 's;opacity:' + rand(0.3, 1).toFixed(2) + '"></i>';
+      }
+    }
+    if (isDay !== 0 && (kind === 'clear' || kind === 'partly')) html += '<i class="sun-glow"></i>';
+    var clouds = { partly: 3, cloud: 6, rain: 5, storm: 5, snow: 4, fog: 0 }[kind] || 0;
+    for (i = 0; i < clouds; i++) {
+      html += '<i class="cloud" style="top:' + rand(-6, 38).toFixed(1) + '%;width:' + rand(30, 55).toFixed(0) + 'rem;animation-duration:' + rand(90, 170).toFixed(0) + 's;animation-delay:-' + rand(0, 170).toFixed(0) + 's"></i>';
+    }
+    if (kind === 'rain' || kind === 'storm') {
+      for (i = 0; i < 40; i++) { // 40 keeps ~50 fps on the TV (80 drops ran at ~35)
+        html += '<i class="drop" style="left:' + rand(-5, 105).toFixed(1) + '%;animation-duration:' + rand(0.6, 1.1).toFixed(2) + 's;animation-delay:-' + rand(0, 1.2).toFixed(2) + 's"></i>';
+      }
+    }
+    if (kind === 'snow') {
+      for (i = 0; i < 40; i++) {
+        var size = rand(0.3, 0.8).toFixed(2);
+        html += '<i class="flake" style="left:' + rand(0, 100).toFixed(1) + '%;width:' + size + 'rem;height:' + size + 'rem;animation-duration:' + rand(7, 14).toFixed(1) + 's;animation-delay:-' + rand(0, 14).toFixed(1) + 's"></i>';
+      }
+    }
+    if (kind === 'fog') {
+      for (i = 0; i < 4; i++) html += '<i class="mist" style="top:' + (15 + i * 20) + '%;animation-duration:' + (60 + i * 15) + 's;animation-delay:-' + (i * 12) + 's"></i>';
+    }
+    if (kind === 'storm') html += '<i class="flash"></i>';
+    next.innerHTML = html;
+    next.className = 'scene sky-' + key + ' show';
+    prev.className = prev.className.replace(' show', '');
+    setTimeout(function () { if (prev.className.indexOf('show') < 0) prev.innerHTML = ''; }, 2600);
+  }
+
   // ---------- rendering ----------
   function renderList() {
     var html = '';
@@ -192,23 +318,27 @@
       return;
     }
     panelEl.innerHTML = forecastHTML(place, state.forecast.data);
+    setScene(describe(state.forecast.data.current.weather_code)[1], state.forecast.data.current.is_day);
   }
 
   function forecastHTML(place, d) {
     var c = d.current, day = d.daily, h = d.hourly;
     var now = describe(c.weather_code);
-    var html = '<div class="place">' + esc(place.name) + '<span class="sub">' + esc(place.sub || '') + '</span></div>';
+    var di = state.dayIndex;
+    var html = '<div class="place">' + esc(place.name) + '<span class="sub">' + esc(place.sub || '') + '</span>' +
+      '<span class="city-time"><span id="city-clock">' + cityClock(d) + '</span> · ' + gmt(d.utc_offset_seconds) + '</span></div>';
 
     html += '<div class="now">' + '<div class="big-icon">' + icon(now[1], c.is_day) + '</div>' +
       '<div><div class="temp">' + round(c.temperature_2m) + '</div><div class="cond">' + now[0] + '</div></div>' +
+      '<div class="arc">' + dayArcSVG(d, di) + '<div class="arc-caption">' + dayArcCaption(d, di) + '</div></div>' +
       '<div class="facts">' +
       'Máx <b>' + round(day.temperature_2m_max[0]) + '</b> · Mín <b>' + round(day.temperature_2m_min[0]) + '</b><br>' +
       'Sensação <b>' + round(c.apparent_temperature) + '</b><br>' +
-      'Umidade <b>' + c.relative_humidity_2m + '%</b> · Vento <b>' + Math.round(c.wind_speed_10m) + ' km/h</b><br>' +
-      'Sol <b>' + hhmm(day.sunrise[0]) + '</b> – <b>' + hhmm(day.sunset[0]) + '</b></div></div>';
+      'Umidade <b>' + c.relative_humidity_2m + '%</b><br>' +
+      'Vento <b>' + Math.round(c.wind_speed_10m) + ' km/h</b></div></div>';
 
     // hours: today = next 8 hours from now; other days = every 3 hours
-    var di = state.dayIndex, slots = [];
+    var slots = [];
     if (di === 0) {
       var start = 0, nowHour = c.time.slice(0, 13);
       while (start < h.time.length && h.time[start].slice(0, 13) < nowHour) start++;
@@ -465,11 +595,15 @@
   // ---------- clock & refresh ----------
   function tick() {
     var d = new Date();
-    $('clock').textContent = WEEKDAYS[d.getDay()] + ', ' + ('0' + d.getDate()).slice(-2) + '/' + ('0' + (d.getMonth() + 1)).slice(-2) +
-      '  ' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+    $('clock').textContent = WEEKDAYS[d.getDay()] + ', ' + pad(d.getDate()) + '/' + pad(d.getMonth() + 1) +
+      '  ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + '  (TV ' + gmt(-d.getTimezoneOffset() * 60) + ')';
+    var cc = $('city-clock');
+    if (cc && state.forecast) cc.textContent = cityClock(state.forecast.data);
   }
   tick();
   setInterval(tick, 15000);
+  // move the "now" marker on the day arc
+  setInterval(function () { if (state.zone === 'list' || state.zone === 'days') renderPanel(); }, 60000);
   setInterval(function () { loadPanel(true); }, REFRESH_MS);
 
   if (!state.cities.length) state.listIndex = 1;

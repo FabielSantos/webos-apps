@@ -12,16 +12,16 @@
    "iconUri": "https://fabielsantos.github.io/webos-apps/apps/clima/largeIcon.png",
    "manifest": {
     "id": "com.fvsant.clima",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "type": "web",
     "title": "Clima",
     "appDescription": "Previsão do tempo por cidade, com busca e navegação pelo controle remoto.",
     "iconUri": "https://fabielsantos.github.io/webos-apps/apps/clima/largeIcon.png",
     "sourceUrl": "https://github.com/FabielSantos/webos-apps/tree/main/apps/clima",
     "rootRequired": false,
-    "ipkUrl": "https://fabielsantos.github.io/webos-apps/ipks/com.fvsant.clima_1.0.0_all.ipk",
+    "ipkUrl": "https://fabielsantos.github.io/webos-apps/ipks/com.fvsant.clima_1.1.0_all.ipk",
     "ipkHash": {
-     "sha256": "39223668fb2886f554cb0a569e147abcf8c3147a19867c7a7c003a5575002ba5"
+     "sha256": "42e5d20648a6b5ba846e13d65533a4e619d27241d82ed4beb4a6b1f15cc30ac9"
     }
    },
    "shortDescription": "Previsão do tempo por cidade, com busca e navegação pelo controle remoto.",
