@@ -3,9 +3,30 @@
   "page": 1,
   "count": 1,
   "maxPage": 1,
-  "itemsTotal": 1
+  "itemsTotal": 2
  },
  "packages": [
+  {
+   "id": "com.fvsant.clima",
+   "title": "Clima",
+   "iconUri": "https://fabielsantos.github.io/webos-apps/apps/clima/largeIcon.png",
+   "manifest": {
+    "id": "com.fvsant.clima",
+    "version": "1.0.0",
+    "type": "web",
+    "title": "Clima",
+    "appDescription": "Previsão do tempo por cidade, com busca e navegação pelo controle remoto.",
+    "iconUri": "https://fabielsantos.github.io/webos-apps/apps/clima/largeIcon.png",
+    "sourceUrl": "https://github.com/FabielSantos/webos-apps/tree/main/apps/clima",
+    "rootRequired": false,
+    "ipkUrl": "https://fabielsantos.github.io/webos-apps/ipks/com.fvsant.clima_1.0.0_all.ipk",
+    "ipkHash": {
+     "sha256": "39223668fb2886f554cb0a569e147abcf8c3147a19867c7a7c003a5575002ba5"
+    }
+   },
+   "shortDescription": "Previsão do tempo por cidade, com busca e navegação pelo controle remoto.",
+   "fullDescriptionUrl": "https://fabielsantos.github.io/webos-apps/apps/clima/description.html"
+  },
   {
    "id": "com.fvsant.hellotv",
    "title": "Hello TV",

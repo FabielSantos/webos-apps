@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Clima</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="brand">Clima</div>
+    <div id="clock" class="clock"></div>
+  </header>
+
+  <main>
+    <nav id="list" class="list"></nav>
+    <section id="panel" class="panel"></section>
+  </main>
+
+  <footer id="hints" class="hints"></footer>
+
+  <div id="search" class="overlay hidden">
+    <div class="dialog">
+      <div class="dialog-title">Buscar cidade</div>
+      <input id="query" type="text" placeholder="Digite o nome da cidade e pressione OK" autocomplete="off">
+      <div id="search-status" class="search-status"></div>
+      <div id="results" class="results"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

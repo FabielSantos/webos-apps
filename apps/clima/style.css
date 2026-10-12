@@ -1,0 +1,102 @@
+/* Designed for a 1920x1080 TV: 1rem = 20px at full width. Chromium 68 (webOS 5): no flex gap. */
+html { font-size: calc(100vw / 96); }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(160deg, #0f2647 0%, #0b1324 60%, #070b15 100%);
+  color: #e2e8f0;
+  font-family: "LG Smart UI", "Helvetica Neue", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 3.5rem 1.5rem; /* TV safe area */
+}
+
+header { display: flex; justify-content: space-between; align-items: baseline; height: 4.5rem; }
+.brand { font-size: 2.6rem; font-weight: 700; letter-spacing: 0.05rem; }
+.clock { font-size: 1.6rem; color: #94a3b8; }
+
+main { flex: 1; display: flex; min-height: 0; margin-top: 1rem; }
+
+/* ---------- city list ---------- */
+.list { width: 27rem; overflow: hidden; padding: 0.4rem; margin-right: 2.5rem; }
+.item {
+  display: flex; align-items: center;
+  height: 4.2rem; padding: 0 1.2rem; margin-bottom: 0.6rem;
+  border-radius: 0.8rem; background: rgba(148, 163, 184, 0.08);
+  border: 0.15rem solid transparent;
+  font-size: 1.45rem; white-space: nowrap; overflow: hidden;
+}
+.item svg { width: 1.8rem; height: 1.8rem; margin-right: 0.9rem; flex: none; }
+.item .name { overflow: hidden; text-overflow: ellipsis; }
+.item .sub { color: #94a3b8; font-size: 1.05rem; margin-left: 0.6rem; overflow: hidden; text-overflow: ellipsis; }
+.item.active { background: rgba(56, 189, 248, 0.14); }
+.item.focused { border-color: #38bdf8; background: rgba(56, 189, 248, 0.28); transform: scale(1.03); }
+.list.dim .item.focused { border-color: rgba(56, 189, 248, 0.45); transform: none; }
+
+/* ---------- weather panel ---------- */
+.panel { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.place { font-size: 2.2rem; font-weight: 600; }
+.place .sub { font-size: 1.3rem; color: #94a3b8; font-weight: 400; margin-left: 0.8rem; }
+
+.now { display: flex; align-items: center; margin-top: 1rem; }
+.now .big-icon { width: 9.5rem; height: 9.5rem; margin-right: 1.5rem; }
+.now .temp { font-size: 7rem; font-weight: 300; line-height: 1; }
+.now .cond { font-size: 1.7rem; margin-top: 0.4rem; }
+.now .facts { margin-left: auto; font-size: 1.3rem; color: #cbd5e1; line-height: 2.1rem; text-align: right; }
+.now .facts b { color: #f8fafc; font-weight: 600; }
+
+.section-title { font-size: 1.2rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1rem; margin: 1.6rem 0 0.7rem; }
+
+.hours { display: flex; }
+.hour {
+  flex: 1; text-align: center; padding: 0.7rem 0; margin-right: 0.6rem;
+  border-radius: 0.8rem; background: rgba(148, 163, 184, 0.08);
+}
+.hour:last-child { margin-right: 0; }
+.hour .t { font-size: 1.1rem; color: #94a3b8; }
+.hour svg { width: 3rem; height: 3rem; margin: 0.3rem 0; }
+.hour .v { font-size: 1.45rem; }
+.hour .p { font-size: 1rem; color: #7dd3fc; height: 1.2rem; }
+
+.days { display: flex; }
+.day {
+  flex: 1; text-align: center; padding: 0.8rem 0; margin-right: 0.6rem;
+  border-radius: 0.8rem; background: rgba(148, 163, 184, 0.08);
+  border: 0.15rem solid transparent;
+}
+.day:last-child { margin-right: 0; }
+.day .d { font-size: 1.25rem; font-weight: 600; }
+.day .dt { font-size: 0.95rem; color: #94a3b8; }
+.day svg { width: 3.4rem; height: 3.4rem; margin: 0.3rem 0; }
+.day .mx { font-size: 1.45rem; }
+.day .mn { font-size: 1.15rem; color: #94a3b8; margin-left: 0.4rem; }
+.day .p { font-size: 1rem; color: #7dd3fc; height: 1.2rem; }
+.day.selected { background: rgba(56, 189, 248, 0.14); }
+.day.focused { border-color: #38bdf8; background: rgba(56, 189, 248, 0.28); transform: scale(1.04); }
+
+.message { margin: auto; text-align: center; font-size: 1.6rem; color: #94a3b8; max-width: 40rem; line-height: 2.4rem; }
+.message b { color: #e2e8f0; }
+
+/* ---------- footer hints ---------- */
+.hints { height: 2.6rem; display: flex; align-items: center; font-size: 1.1rem; color: #94a3b8; }
+.hints span { margin-right: 2.2rem; }
+.key { display: inline-block; padding: 0.1rem 0.6rem; border-radius: 0.4rem; background: #1e293b; color: #e2e8f0; margin-right: 0.4rem; font-weight: 600; }
+.key.red { background: #dc2626; color: #fff; }
+
+/* ---------- search overlay ---------- */
+.overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(2, 6, 23, 0.82); display: flex; align-items: flex-start; justify-content: center; padding-top: 7rem; }
+.hidden { display: none; }
+.dialog { width: 56rem; background: #0f1b33; border-radius: 1.2rem; padding: 2rem 2.4rem; border: 0.1rem solid #1e3a5f; }
+.dialog-title { font-size: 1.8rem; font-weight: 600; margin-bottom: 1.2rem; }
+#query {
+  width: 100%; font-size: 1.6rem; padding: 0.9rem 1.2rem; border-radius: 0.8rem;
+  border: 0.15rem solid #334155; background: #020617; color: #f8fafc; outline: none;
+}
+#query.focused { border-color: #38bdf8; }
+.search-status { font-size: 1.2rem; color: #94a3b8; min-height: 2.4rem; margin-top: 0.8rem; }
+.results { max-height: 27rem; overflow: hidden; padding: 0.3rem; } /* ~6 rows; focus scrolls the rest */
+.results .item { height: 3.8rem; }

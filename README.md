@@ -15,6 +15,7 @@ https://fabielsantos.github.io/webos-apps/api/apps.json
 | App | ID | Source |
 |---|---|---|
 | Hello TV | `com.fvsant.hellotv` | [apps/hello-tv](apps/hello-tv) |
+| Clima | `com.fvsant.clima` | [apps/clima](apps/clima) — weather via Open-Meteo, remote-navigable |
 
 ## Publish a new version
 
