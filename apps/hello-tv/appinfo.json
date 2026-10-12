@@ -1,9 +1,11 @@
 {
   "id": "com.fvsant.hellotv",
-  "version": "1.0.2",
-  "vendor": "My Company",
+  "version": "1.0.3",
+  "vendor": "Fabiel Santos",
   "type": "web",
   "main": "index.html",
   "title": "Hello TV",
-  "icon": "icon.png"
+  "appDescription": "App de teste: confirma instalações pelo repositório pessoal.",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png"
 }

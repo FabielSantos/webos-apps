@@ -9,22 +9,23 @@
   {
    "id": "com.fvsant.hellotv",
    "title": "Hello TV",
-   "iconUri": "https://fabielsantos.github.io/webos-apps/icons/com.fvsant.hellotv.png",
+   "iconUri": "https://fabielsantos.github.io/webos-apps/apps/hello-tv/largeIcon.png",
    "manifest": {
     "id": "com.fvsant.hellotv",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "type": "web",
     "title": "Hello TV",
-    "appDescription": "",
-    "iconUri": "https://fabielsantos.github.io/webos-apps/icons/com.fvsant.hellotv.png",
-    "sourceUrl": "",
+    "appDescription": "App de teste: confirma instalações pelo repositório pessoal.",
+    "iconUri": "https://fabielsantos.github.io/webos-apps/apps/hello-tv/largeIcon.png",
+    "sourceUrl": "https://github.com/FabielSantos/webos-apps/tree/main/apps/hello-tv",
     "rootRequired": false,
-    "ipkUrl": "https://fabielsantos.github.io/webos-apps/ipks/com.fvsant.hellotv_1.0.2_all.ipk",
+    "ipkUrl": "https://fabielsantos.github.io/webos-apps/ipks/com.fvsant.hellotv_1.0.3_all.ipk",
     "ipkHash": {
-     "sha256": "5283a3835f26a89699535f8b062c46dcd66be266f5f93de9fdca82ce41bf022e"
+     "sha256": "8da06b1d054f9755956a25ec6ff9e92b4c68e45bea0380ff2d81fc04e3e352a8"
     }
    },
-   "shortDescription": "Hello TV"
+   "shortDescription": "App de teste: confirma instalações pelo repositório pessoal.",
+   "fullDescriptionUrl": "https://fabielsantos.github.io/webos-apps/apps/hello-tv/description.html"
   }
  ]
 }
