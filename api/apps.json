@@ -1,0 +1,30 @@
+{
+ "paging": {
+  "page": 1,
+  "count": 1,
+  "maxPage": 1,
+  "itemsTotal": 1
+ },
+ "packages": [
+  {
+   "id": "com.fvsant.hellotv",
+   "title": "Hello TV",
+   "iconUri": "https://fabielsantos.github.io/webos-apps/icons/com.fvsant.hellotv.png",
+   "manifest": {
+    "id": "com.fvsant.hellotv",
+    "version": "1.0.2",
+    "type": "web",
+    "title": "Hello TV",
+    "appDescription": "",
+    "iconUri": "https://fabielsantos.github.io/webos-apps/icons/com.fvsant.hellotv.png",
+    "sourceUrl": "",
+    "rootRequired": false,
+    "ipkUrl": "https://fabielsantos.github.io/webos-apps/ipks/com.fvsant.hellotv_1.0.2_all.ipk",
+    "ipkHash": {
+     "sha256": "5283a3835f26a89699535f8b062c46dcd66be266f5f93de9fdca82ce41bf022e"
+    }
+   },
+   "shortDescription": "Hello TV"
+  }
+ ]
+}
