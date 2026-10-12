@@ -16,6 +16,21 @@ https://fabielsantos.github.io/webos-apps/api/apps.json
 |---|---|---|
 | Hello TV | `com.fvsant.hellotv` | [apps/hello-tv](apps/hello-tv) |
 | Clima | `com.fvsant.clima` | [apps/clima](apps/clima) — weather via Open-Meteo, remote-navigable |
+| Painel | `com.fvsant.painel` | [apps/painel](apps/painel) — living-room dashboard: clock, weather, Google Calendar, Bing photos |
+
+### Painel: connect your Google Calendar
+
+The calendar address is secret, so it never goes in this repository — it is sent straight to the TV, which stores it.
+
+1. Google Calendar (web) → Settings → your calendar → *Integrate calendar* → copy **Secret address in iCal format**.
+2. From the Mac, on the same network as the TV:
+
+```bash
+ares-launch -d tvsala com.fvsant.painel -p '{"ical":"PASTE_THE_SECRET_ADDRESS_HERE"}'
+```
+
+Other options (same command, different JSON): several calendars `{"ical":["url1","url2"]}`, hide holidays `{"holidays":false}`,
+fixed weather location `{"city":"Toronto","lat":43.70,"lon":-79.40}` (default: by IP), start over `{"reset":true}`.
 
 ## Publish a new version
 

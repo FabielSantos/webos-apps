@@ -3,7 +3,7 @@
   "page": 1,
   "count": 1,
   "maxPage": 1,
-  "itemsTotal": 2
+  "itemsTotal": 3
  },
  "packages": [
   {
@@ -47,6 +47,27 @@
    },
    "shortDescription": "App de teste: confirma instalações pelo repositório pessoal.",
    "fullDescriptionUrl": "https://fabielsantos.github.io/webos-apps/apps/hello-tv/description.html"
+  },
+  {
+   "id": "com.fvsant.painel",
+   "title": "Painel",
+   "iconUri": "https://fabielsantos.github.io/webos-apps/apps/painel/largeIcon.png",
+   "manifest": {
+    "id": "com.fvsant.painel",
+    "version": "1.0.0",
+    "type": "web",
+    "title": "Painel",
+    "appDescription": "Painel da sala: relógio, clima, agenda do Google e fotos do dia.",
+    "iconUri": "https://fabielsantos.github.io/webos-apps/apps/painel/largeIcon.png",
+    "sourceUrl": "https://github.com/FabielSantos/webos-apps/tree/main/apps/painel",
+    "rootRequired": false,
+    "ipkUrl": "https://fabielsantos.github.io/webos-apps/ipks/com.fvsant.painel_1.0.0_all.ipk",
+    "ipkHash": {
+     "sha256": "ca652056ef47d5d8e480fc43b3bded8d68db43321f5ba3a09a8f24e591ee7bfc"
+    }
+   },
+   "shortDescription": "Painel da sala: relógio, clima, agenda do Google e fotos do dia.",
+   "fullDescriptionUrl": "https://fabielsantos.github.io/webos-apps/apps/painel/description.html"
   }
  ]
 }

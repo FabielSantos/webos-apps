@@ -1,0 +1,58 @@
+/* 1920x1080 TV, 1rem = 20px. Chromium 68 (webOS 5): no flex gap. */
+html { font-size: calc(100vw / 96); }
+* { box-sizing: border-box; }
+
+body {
+  margin: 0; height: 100vh; overflow: hidden;
+  background: #0b1324; color: #f8fafc;
+  font-family: "LG Smart UI", "Helvetica Neue", Arial, sans-serif;
+  text-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.55);
+}
+
+/* two stacked layers for crossfading photos */
+.bg { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 2.5s ease; }
+.bg.show { opacity: 1; }
+.shade {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    linear-gradient(90deg, rgba(2, 6, 23, 0.72) 0%, rgba(2, 6, 23, 0.35) 45%, rgba(2, 6, 23, 0) 70%),
+    linear-gradient(0deg, rgba(2, 6, 23, 0.55) 0%, rgba(2, 6, 23, 0) 30%),
+    linear-gradient(180deg, rgba(2, 6, 23, 0.45) 0%, rgba(2, 6, 23, 0) 25%);
+}
+
+section, .caption, .toast { position: fixed; }
+
+/* safe area: 3.5rem horizontal, 2.5rem vertical */
+.clock-box { top: 2.5rem; left: 3.5rem; }
+.time { font-size: 9.5rem; font-weight: 300; line-height: 1; letter-spacing: -0.2rem; }
+.date { font-size: 2.1rem; margin-top: 0.6rem; color: #e2e8f0; }
+
+.weather { top: 3rem; right: 3.5rem; text-align: right; }
+.weather .row { display: flex; align-items: center; justify-content: flex-end; }
+.weather .big-icon { width: 6.5rem; height: 6.5rem; margin-right: 0.8rem; filter: drop-shadow(0 0.1rem 0.3rem rgba(0,0,0,0.5)); }
+.weather .temp { font-size: 5.5rem; font-weight: 300; line-height: 1; }
+.weather .cond { font-size: 1.5rem; color: #e2e8f0; margin-top: 0.3rem; }
+.weather .city { font-size: 1.2rem; color: #cbd5e1; margin-top: 0.2rem; }
+.weather .days { display: flex; justify-content: flex-end; margin-top: 1rem; }
+.weather .day { width: 6.4rem; text-align: center; padding: 0.5rem 0; margin-left: 0.6rem; border-radius: 0.8rem; background: rgba(2, 6, 23, 0.35); }
+.weather .day .d { font-size: 1.1rem; font-weight: 600; }
+.weather .day svg { width: 2.8rem; height: 2.8rem; }
+.weather .day .t { font-size: 1.1rem; }
+.weather .day .t span { color: #cbd5e1; margin-left: 0.3rem; }
+
+.agenda { left: 3.5rem; bottom: 3rem; width: 46rem; }
+.agenda.hidden { display: none; }
+.agenda .title { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.12rem; color: #cbd5e1; margin-bottom: 0.6rem; }
+.agenda .group { font-size: 1.25rem; font-weight: 600; color: #7dd3fc; margin: 0.9rem 0 0.3rem; }
+.agenda .ev { display: flex; align-items: baseline; font-size: 1.55rem; line-height: 2.3rem; }
+.agenda .ev .when { width: 7.5rem; flex: none; color: #e2e8f0; font-variant-numeric: tabular-nums; }
+.agenda .ev .what { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.agenda .ev.holiday .what { color: #fcd34d; }
+.agenda .ev.now .when { color: #4ade80; }
+.agenda .note { font-size: 1.25rem; color: #cbd5e1; line-height: 1.9rem; }
+
+.caption { right: 3.5rem; bottom: 2.5rem; max-width: 52rem; text-align: right; font-size: 1.05rem; color: #e2e8f0; opacity: 0.85; }
+.caption b { font-size: 1.3rem; display: block; margin-bottom: 0.2rem; }
+
+.toast { left: 50%; top: 45%; transform: translateX(-50%); background: rgba(2, 6, 23, 0.85); padding: 1rem 2rem; border-radius: 1rem; font-size: 1.5rem; }
+.toast.hidden { display: none; }

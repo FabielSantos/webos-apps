@@ -1,0 +1,13 @@
+{
+  "id": "com.fvsant.painel",
+  "version": "1.0.0",
+  "vendor": "Fabiel Santos",
+  "type": "web",
+  "main": "index.html",
+  "title": "Painel",
+  "appDescription": "Painel da sala: relógio, clima, agenda do Google e fotos do dia.",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "resolution": "1920x1080",
+  "disableBackHistoryAPI": true
+}
