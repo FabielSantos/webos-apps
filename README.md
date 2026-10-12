@@ -19,6 +19,7 @@ https://fabielsantos.github.io/webos-apps/api/apps.json
 | Painel | `com.fvsant.painel` | [apps/painel](apps/painel) — living-room dashboard: clock, weather, Google Calendar, Bing photos |
 | Enviar pra TV | `com.fvsant.enviar` | [apps/enviar](apps/enviar) — receive links, media and notes from the phone ([send/](send)) or the Mac ([tools/send-to-tv](tools/send-to-tv)) via ntfy.sh |
 | Canais | `com.fvsant.canais` | [apps/canais](apps/canais) — free live channels from [iptv-org](https://github.com/iptv-org/iptv) M3U lists, native HLS |
+| Rádios | `com.fvsant.radios` | [apps/radios](apps/radios) — internet radio from [Radio Browser](https://www.radio-browser.info): countries, genres, search, favorites |
 
 ### Canais: add your own M3U playlist
 

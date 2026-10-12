@@ -3,7 +3,7 @@
   "page": 1,
   "count": 1,
   "maxPage": 1,
-  "itemsTotal": 5
+  "itemsTotal": 6
  },
  "packages": [
   {
@@ -110,6 +110,27 @@
    },
    "shortDescription": "Painel da sala: relógio, clima, agenda do Google e fotos do dia.",
    "fullDescriptionUrl": "https://fabielsantos.github.io/webos-apps/apps/painel/description.html"
+  },
+  {
+   "id": "com.fvsant.radios",
+   "title": "Rádios",
+   "iconUri": "https://fabielsantos.github.io/webos-apps/apps/radios/largeIcon.png",
+   "manifest": {
+    "id": "com.fvsant.radios",
+    "version": "1.0.0",
+    "type": "web",
+    "title": "Rádios",
+    "appDescription": "Rádios pela internet do mundo todo (Radio Browser): Brasil, Portugal, Canadá, gêneros e busca.",
+    "iconUri": "https://fabielsantos.github.io/webos-apps/apps/radios/largeIcon.png",
+    "sourceUrl": "https://github.com/FabielSantos/webos-apps/tree/main/apps/radios",
+    "rootRequired": false,
+    "ipkUrl": "https://fabielsantos.github.io/webos-apps/ipks/com.fvsant.radios_1.0.0_all.ipk",
+    "ipkHash": {
+     "sha256": "7536d5b3d7191d9ed9999529ded3f3a6cae42e5b28a0840eea71f9ce273b7ff2"
+    }
+   },
+   "shortDescription": "Rádios pela internet do mundo todo (Radio Browser): Brasil, Portugal, Canadá, gêneros e busca.",
+   "fullDescriptionUrl": "https://fabielsantos.github.io/webos-apps/apps/radios/description.html"
   }
  ]
 }
