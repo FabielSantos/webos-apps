@@ -1,0 +1,13 @@
+{
+  "id": "com.fvsant.enviar",
+  "version": "1.0.0",
+  "vendor": "Fabiel Santos",
+  "type": "web",
+  "main": "index.html",
+  "title": "Enviar pra TV",
+  "appDescription": "Receba links, vídeos, fotos e textos do celular ou do Mac na TV.",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "resolution": "1920x1080",
+  "disableBackHistoryAPI": true
+}

@@ -1,0 +1,40 @@
+#!/bin/sh
+# Send a link, text or file to the "Enviar pra TV" app on the TV (through ntfy.sh).
+#
+#   send-to-tv https://youtu.be/...          link (YouTube opens in the YouTube app)
+#   send-to-tv "Jantar às 20h"                text note on the TV screen
+#   send-to-tv -f ~/Movies/clip.mp4           file (photo/video/audio, up to 15 MB)
+#   send-to-tv --setup                        create a secret channel and set it on the TV (same network)
+#   send-to-tv --topic tv-xxxxxxxx            use the channel shown on the TV screen
+#
+# The channel name is kept in ~/.config/send-to-tv/topic (never in this repository).
+set -eu
+CONF="$HOME/.config/send-to-tv"
+TOPIC_FILE="$CONF/topic"
+DEVICE="${SEND_TO_TV_DEVICE:-tvsala}"
+ARES_LAUNCH="$(command -v ares-launch || echo "$HOME/.npm-global/bin/ares-launch")"
+
+usage() { sed -n '2,10p' "$0" | sed 's/^# \{0,1\}//'; exit "${1:-0}"; }
+save_topic() { mkdir -p "$CONF"; printf '%s\n' "$1" > "$TOPIC_FILE"; chmod 600 "$TOPIC_FILE"; }
+
+case "${1:-}" in
+  ""|-h|--help) usage ;;
+  --topic) [ -n "${2:-}" ] || usage 1; save_topic "$2"; echo "channel saved: $2"; exit 0 ;;
+  --setup)
+    t="tv-$(LC_ALL=C tr -dc 'a-z0-9' </dev/urandom | head -c 15)"
+    save_topic "$t"
+    "$ARES_LAUNCH" -d "$DEVICE" com.fvsant.enviar -p "{\"topic\":\"$t\"}"
+    echo "channel $t set on the Mac and the TV — scan the new QR code with the phone"
+    exit 0 ;;
+esac
+
+[ -s "$TOPIC_FILE" ] || { echo "no channel yet: run 'send-to-tv --setup' (or --topic <name shown on the TV>)" >&2; exit 1; }
+topic="$(cat "$TOPIC_FILE")"
+
+if [ "$1" = "-f" ]; then
+  [ -f "${2:-}" ] || { echo "file not found: ${2:-}" >&2; exit 1; }
+  curl -fsS -T "$2" -H "Filename: $(basename "$2")" "https://ntfy.sh/$topic" >/dev/null
+else
+  curl -fsS -d "$*" "https://ntfy.sh/$topic" >/dev/null
+fi
+echo "sent ✓"

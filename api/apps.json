@@ -3,7 +3,7 @@
   "page": 1,
   "count": 1,
   "maxPage": 1,
-  "itemsTotal": 3
+  "itemsTotal": 4
  },
  "packages": [
   {
@@ -26,6 +26,27 @@
    },
    "shortDescription": "Previsão do tempo por cidade, com busca e navegação pelo controle remoto.",
    "fullDescriptionUrl": "https://fabielsantos.github.io/webos-apps/apps/clima/description.html"
+  },
+  {
+   "id": "com.fvsant.enviar",
+   "title": "Enviar pra TV",
+   "iconUri": "https://fabielsantos.github.io/webos-apps/apps/enviar/largeIcon.png",
+   "manifest": {
+    "id": "com.fvsant.enviar",
+    "version": "1.0.0",
+    "type": "web",
+    "title": "Enviar pra TV",
+    "appDescription": "Receba links, vídeos, fotos e textos do celular ou do Mac na TV.",
+    "iconUri": "https://fabielsantos.github.io/webos-apps/apps/enviar/largeIcon.png",
+    "sourceUrl": "https://github.com/FabielSantos/webos-apps/tree/main/apps/enviar",
+    "rootRequired": false,
+    "ipkUrl": "https://fabielsantos.github.io/webos-apps/ipks/com.fvsant.enviar_1.0.0_all.ipk",
+    "ipkHash": {
+     "sha256": "1e33095c32ea4c58c7307e2013cda714f8787cad77e6a70eec086267d943d296"
+    }
+   },
+   "shortDescription": "Receba links, vídeos, fotos e textos do celular ou do Mac na TV.",
+   "fullDescriptionUrl": "https://fabielsantos.github.io/webos-apps/apps/enviar/description.html"
   },
   {
    "id": "com.fvsant.hellotv",

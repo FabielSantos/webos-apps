@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Enviar pra TV</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="brand">Enviar pra TV</div>
+    <div id="status" class="status"></div>
+  </header>
+
+  <main>
+    <section class="how">
+      <div class="step"><span class="n">1</span><div><b>Do celular</b><br>Escaneie o código ao lado. Abre uma página para enviar links, vídeos e textos.
+        No Android, instale a página (menu ⋮ → <i>Adicionar à tela inicial</i>) e ela aparece no menu <i>Compartilhar</i> dos apps.</div></div>
+      <div class="step"><span class="n">2</span><div><b>Do Mac</b><br><code>send-to-tv https://youtu.be/…</code></div></div>
+      <div class="step"><span class="n">3</span><div><b>Na TV</b><br>YouTube abre no app do YouTube · vídeos, fotos e áudio tocam aqui · outros links abrem no navegador · textos aparecem na tela.</div></div>
+      <div class="title">Recebidos</div>
+      <div id="history" class="history"></div>
+    </section>
+    <section class="qr-box">
+      <div id="qr" class="qr"></div>
+      <div id="channel" class="channel"></div>
+    </section>
+  </main>
+
+  <footer id="hints" class="hints"></footer>
+
+  <div id="viewer" class="viewer hidden"></div>
+
+  <script src="lib/qrcode.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
